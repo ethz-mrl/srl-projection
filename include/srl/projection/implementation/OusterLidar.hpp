@@ -70,9 +70,27 @@ ProjectionStatus OusterLidar::project(
 
   // check bounds
   if(elevation > beamElevationAngles_[0]) {
+    (*imagePoint)[0] = (azimuth - beamAzimuthAngles_[0])/360.0 * imageWidth_;
+    // azimuthal wrap-around
+    if((*imagePoint)[0]<-0.5) {
+      (*imagePoint)[0] = (*imagePoint)[0] + imageWidth_;
+    }
+    if((*imagePoint)[0]>imageWidth_-0.5) {
+      (*imagePoint)[0] = (*imagePoint)[0] - imageWidth_;
+    }
+    (*imagePoint)[1] = -1;
     return ProjectionStatus::OutsideImage;
   }
   if(elevation < beamElevationAngles_[beamElevationAngles_.rows()-1]) {
+    (*imagePoint)[0] = (azimuth - beamAzimuthAngles_[beamElevationAngles_.rows()-1])/360.0 * imageWidth_;
+    // azimuthal wrap-around
+    if((*imagePoint)[0]<-0.5) {
+      (*imagePoint)[0] = (*imagePoint)[0] + imageWidth_;
+    }
+    if((*imagePoint)[0]>imageWidth_-0.5) {
+      (*imagePoint)[0] = (*imagePoint)[0] - imageWidth_;
+    }
+    (*imagePoint)[1] = imageHeight_;
     return ProjectionStatus::OutsideImage;
   }
   // find the right row
