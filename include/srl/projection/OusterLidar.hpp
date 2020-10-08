@@ -117,6 +117,9 @@ class OusterLidar : public ProjectionBase
       Matrixf<2, 3> * pointJacobian,
       Matrix2Xf * intrinsicsJacobian = nullptr) const;
 
+  inline ProjectionStatus projectSphere(
+      const Vector3f & center, float radius, Vector2f * imageCenter, float& imageRadius) const;
+
   /// \brief Projects a Euclidean point to a 2d image point (projection).
   ///        Uses projection including distortion models.
   /// @param[in]  point              The point in Euclidean coordinates.

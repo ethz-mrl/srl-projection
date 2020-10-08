@@ -217,6 +217,99 @@ ProjectionStatus OusterLidar::project(
   return ProjectionStatus::Successful;
 }
 
+ProjectionStatus OusterLidar::projectSphere(
+    const Vector3f& center,
+    float radius,
+    Vector2f* imageCenter,
+    float& imageRadius) const
+{
+  // handle singularity
+  if (center.norm() < 1.0e-12) {
+    return ProjectionStatus::Invalid;
+  }
+
+  // compute azimuth and elevation angles (projection) [rad]
+  const float_t R = sqrt(center[0]*center[0] + center[1]*center[1] + center[2]*center[2]);
+  const float_t azimuth = (2.0 * M_PI - std::atan2(center[1], center[0])) * 360.0 / (2 * M_PI);
+  const float_t elevation = std::asin(center[2]/R) * 360.0 / (2 * M_PI);
+
+  // check bounds
+  if(elevation > beamElevationAngles_[0]) {
+    return ProjectionStatus::OutsideImage;
+  }
+  if(elevation < beamElevationAngles_[beamElevationAngles_.rows()-1]) {
+    return ProjectionStatus::OutsideImage;
+  }
+  // find the right row
+  /// \todo make this more elegant with binary search
+  bool found = false;
+  int i = 1;
+  for(; i < beamElevationAngles_.rows(); ++i) {
+    if(float_t(beamElevationAngles_[i]) < elevation) {
+      found = true;
+      break;
+    }
+  }
+  if(!found) {
+    return ProjectionStatus::OutsideImage;
+  }
+
+  // for interpolation
+  const float_t r = (elevation-beamElevationAngles_[i])
+      /(beamElevationAngles_[i-1] - beamElevationAngles_[i]);
+  const float_t azimuthOffset = (1.0 - r) * beamAzimuthAngles_[i] + r * beamAzimuthAngles_[i-1];
+
+  // scale and offset
+  (*imageCenter)[0] = (azimuth - azimuthOffset)/360.0 * imageWidth_;
+  (*imageCenter)[1] = i - r;
+
+  // azimuthal wrap-around
+  if((*imageCenter)[0]<-0.5) {
+    (*imageCenter)[0] = (*imageCenter)[0] + imageWidth_;
+  }
+  if((*imageCenter)[0]>imageWidth_-0.5) {
+    (*imageCenter)[0] = (*imageCenter)[0] - imageWidth_;
+  }
+
+  // checks
+  if (ProjectionBase::isMasked(*imageCenter)) {
+    return ProjectionStatus::Masked;
+  }
+
+  // Compute the projected radius
+  // Sine of the angle between the ray through the sphere's centre and a ray tangent to it
+  const float_t sinTheta = radius / center.norm();
+  if (sinTheta > 1) {
+    // The sensor is inside the sphere
+    return ProjectionStatus::OutsideImage;
+  }
+  // Compute radian to degree conversion once
+  static const float_t radToDeg = 180 / M_PI;
+  // Get the angle in degrees from the sine
+  const float_t azimuthRightOffset = radToDeg * std::asin(sinTheta);
+  // NOTE asin ~= x + x^3 / 6
+  //const float_t azimuthRightOffset = radToDeg * (sinTheta + sinTheta * sinTheta * sinTheta / 6);
+  // Azimuth angle of a ray tangent to the right side of the sphere
+  const float_t azimuthRight = azimuth + azimuthRightOffset - azimuthOffset;
+  // Horizontal pixel coordinate of the pixel at the right edge of the projected circle
+  float_t uRadius = azimuthRight / 360.0 * imageWidth_;
+  // azimuthal wrap-around
+  if (uRadius < -0.5) {
+    uRadius = uRadius + imageWidth_;
+  }
+  if (uRadius > imageWidth_ - 0.5) {
+    uRadius = uRadius - imageWidth_;
+  }
+  // Comput the horizontal pixel distane with wrap-around
+  imageRadius = uRadius - (*imageCenter)[0];
+  if (imageRadius < 0) {
+    imageRadius += imageWidth_;
+  }
+
+  return ProjectionStatus::Successful;
+}
+
+
 // Projects a Euclidean point to a 2d image point (projection).
 ProjectionStatus OusterLidar::projectWithExternalParameters(
     const Vector3f &, const VectorXf &,
