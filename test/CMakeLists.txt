@@ -4,7 +4,7 @@ set(CMAKE_THREAD_PREFER_PTHREAD ON)
 find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
 
-add_executable(srl_projection_test "TestPinholeCamera.cpp" "TestOusterLidar.cpp")
+add_executable(srl_projection_test "TestPinholeCamera.cpp" "TestOusterLidar.cpp" "TestLeicaLidar.cpp")
 target_include_directories(srl_projection_test PRIVATE ${GTEST_INCLUDE_DIRS})
 target_link_libraries(srl_projection_test
   PRIVATE
