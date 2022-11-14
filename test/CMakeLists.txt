@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.1...3.16)
 set(CMAKE_THREAD_PREFER_PTHREAD ON)
 find_package(Threads REQUIRED)
 
-add_executable(srl_projection_test "TestPinholeCamera.cpp" "TestRangeImageLidar.cpp" "TestLidar.cpp")
+add_executable(srl_projection_test "TestEquirectangularCamera.cpp" "TestPinholeCamera.cpp" "TestRangeImageLidar.cpp" "TestLidar.cpp")
 target_include_directories(srl_projection_test PRIVATE)
 target_link_libraries(srl_projection_test
   PRIVATE
