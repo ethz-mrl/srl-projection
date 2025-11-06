@@ -36,8 +36,8 @@
  *********************************************************************************/
 
 /**
- * @file implementation/LeicaLidar.hpp
- * @brief Header implementation file for the LeicaLidar class.
+ * @file implementation/Lidar.hpp
+ * @brief Header implementation file for the Lidar class.
  * @author Simon Boche
  */
 
@@ -48,7 +48,7 @@ namespace srl {
 // \brief Namespace for camera-related functionality.
 namespace projection {
 
-LeicaLidar::LeicaLidar(const int imageWidth, const int imageHeight)
+Lidar::Lidar(const int imageWidth, const int imageHeight)
     : ProjectionBase(imageWidth, imageHeight)
 {
     azimuthResolution_ = 360.0f / imageWidth;
@@ -59,7 +59,7 @@ LeicaLidar::LeicaLidar(const int imageWidth, const int imageHeight)
 // Methods to project points
 
 // Projects a Euclidean point to a 2d image point (projection).
-ProjectionStatus LeicaLidar::project(
+ProjectionStatus Lidar::project(
     const Vector3f & point, Vector2f * imagePoint) const
 {
     // handle singularity
@@ -113,7 +113,7 @@ ProjectionStatus LeicaLidar::project(
 }
 
 // Projects a Euclidean point to a 2d image point (projection).
-ProjectionStatus LeicaLidar::project(
+ProjectionStatus Lidar::project(
     const Vector3f & point, Vector2f * imagePoint,
     Matrixf<2, 3> * pointJacobian,
     Matrix2Xf * intrinsicsJacobian) const
@@ -177,7 +177,7 @@ ProjectionStatus LeicaLidar::project(
 
     }
     if(intrinsicsJacobian) {
-        throw std::runtime_error("LeicaLidar does not support intrinsics Jacobian");
+        throw std::runtime_error("Lidar does not support intrinsics Jacobian");
     }
 
     // checks
@@ -187,7 +187,7 @@ ProjectionStatus LeicaLidar::project(
     return ProjectionStatus::Successful;
 }
 
-ProjectionStatus LeicaLidar::projectSphere(
+ProjectionStatus Lidar::projectSphere(
     const Vector3f& center,
     float radius,
     Vector2f* imageCenter,
@@ -265,17 +265,17 @@ ProjectionStatus LeicaLidar::projectSphere(
 
 // ToDo: Check further projection fcts (batch, hom., ...) and corresponding backprojections
 // Projects a Euclidean point to a 2d image point (projection).
-ProjectionStatus LeicaLidar::projectWithExternalParameters(
+ProjectionStatus Lidar::projectWithExternalParameters(
     const Vector3f &, const VectorXf &,
     Vector2f *, Matrixf<2, 3> *,
     Matrix2Xf *) const
 {
-    throw std::runtime_error("external parameters projection for LeicaLidar not implemented");
+    throw std::runtime_error("external parameters projection for Lidar not implemented");
     return ProjectionStatus::Invalid;
 }
 
 // Projects Euclidean points to 2d image points (projection) in a batch.
-void LeicaLidar::projectBatch(
+void Lidar::projectBatch(
     const Matrix3Xf & points, Matrix2Xf * imagePoints,
     std::vector<ProjectionStatus> * stati) const
 {
@@ -291,7 +291,7 @@ void LeicaLidar::projectBatch(
 }
 
 // Projects a point in homogenous coordinates to a 2d image point (projection).
-ProjectionStatus LeicaLidar::projectHomogeneous(
+ProjectionStatus Lidar::projectHomogeneous(
     const Vector4f & point, Vector2f * imagePoint) const
 {
     Vector3f head = point.head<3>();
@@ -303,7 +303,7 @@ ProjectionStatus LeicaLidar::projectHomogeneous(
 }
 
 // Projects a point in homogenous coordinates to a 2d image point (projection).
-ProjectionStatus LeicaLidar::projectHomogeneous(
+ProjectionStatus Lidar::projectHomogeneous(
     const Vector4f & point, Vector2f * imagePoint,
     Matrixf<2, 4> * pointJacobian,
     Matrix2Xf * intrinsicsJacobian) const
@@ -322,17 +322,17 @@ ProjectionStatus LeicaLidar::projectHomogeneous(
 }
 
 // Projects a point in homogenous coordinates to a 2d image point (projection).
-ProjectionStatus LeicaLidar::projectHomogeneousWithExternalParameters(
+ProjectionStatus Lidar::projectHomogeneousWithExternalParameters(
     const Vector4f &, const VectorXf &,
     Vector2f *, Matrixf<2, 4> *,
     Matrix2Xf *) const
 {
-    throw std::runtime_error("intrinsics Jacobian for LeicaLidar not implemented");
+    throw std::runtime_error("intrinsics Jacobian for Lidar not implemented");
     return ProjectionStatus::Invalid;
 }
 
 // Projects points in homogenous coordinates to 2d image points (projection) in a batch.
-void LeicaLidar::projectHomogeneousBatch(
+void Lidar::projectHomogeneousBatch(
     const Matrix4Xf & points, Matrix2Xf * imagePoints,
     std::vector<ProjectionStatus> * stati) const
 {
@@ -351,7 +351,7 @@ void LeicaLidar::projectHomogeneousBatch(
 // Methods to backproject points
 
 // Back-project a 2d image point into Euclidean space (direction vector).
-bool LeicaLidar::backProject(
+bool Lidar::backProject(
     const Vector2f & imagePoint, Vector3f * direction) const
 {
     // adapted from
@@ -375,7 +375,7 @@ bool LeicaLidar::backProject(
 }
 
 // Back-project a 2d image point into Euclidean space (direction vector).
-inline bool LeicaLidar::backProject(
+inline bool Lidar::backProject(
     const Vector2f & imagePoint, Vector3f * direction,
     Matrixf<3, 2> * pointJacobian) const
 {
@@ -403,7 +403,7 @@ inline bool LeicaLidar::backProject(
 }
 
 // Back-project 2d image points into Euclidean space (direction vectors).
-bool LeicaLidar::backProjectBatch(
+bool Lidar::backProjectBatch(
     const Matrix2Xf & imagePoints, Matrix3Xf * directions,
     std::vector<bool> * success) const
 {
@@ -421,7 +421,7 @@ bool LeicaLidar::backProjectBatch(
 }
 
 // Back-project a 2d image point into homogeneous point (direction vector).
-bool LeicaLidar::backProjectHomogeneous(
+bool Lidar::backProjectHomogeneous(
     const Vector2f & imagePoint, Vector4f * direction) const
 {
     Vector3f ray;
@@ -432,7 +432,7 @@ bool LeicaLidar::backProjectHomogeneous(
 }
 
 // Back-project a 2d image point into homogeneous point (direction vector).
-bool LeicaLidar::backProjectHomogeneous(
+bool Lidar::backProjectHomogeneous(
     const Vector2f & imagePoint, Vector4f * direction,
     Matrixf<4, 2> * pointJacobian) const
 {
@@ -447,7 +447,7 @@ bool LeicaLidar::backProjectHomogeneous(
 }
 
 // Back-project 2d image points into homogeneous points (direction vectors).
-bool LeicaLidar::backProjectHomogeneousBatch(
+bool Lidar::backProjectHomogeneousBatch(
     const Matrix2Xf & imagePoints, Matrix4Xf * directions,
     std::vector<bool> * success) const
 {
@@ -464,47 +464,47 @@ bool LeicaLidar::backProjectHomogeneousBatch(
     return true;
 }
 
-float LeicaLidar::azimuthResolutionAngle() const
+float Lidar::azimuthResolutionAngle() const
 {
     return azimuthResolution_;
 }
 
-void LeicaLidar::setAzimuthResolutionAngle(const float azimuthResolutionAngle)
+void Lidar::setAzimuthResolutionAngle(const float azimuthResolutionAngle)
 {
     azimuthResolution_ = azimuthResolutionAngle;
 }
 
-float LeicaLidar::elevationResolutionAngle() const
+float Lidar::elevationResolutionAngle() const
 {
     return elevationResolution_;
 }
 
-void LeicaLidar::setElevationResolutionAngle(const float elevationResolutionAngle)
+void Lidar::setElevationResolutionAngle(const float elevationResolutionAngle)
 {
     elevationResolution_ = elevationResolutionAngle;
 }
 
 
 // get a test instance
-std::shared_ptr<ProjectionBase> LeicaLidar::createTestObject()
+std::shared_ptr<ProjectionBase> Lidar::createTestObject()
 {
-    return std::shared_ptr<ProjectionBase>(new LeicaLidar(3600, 1800));
+    return std::shared_ptr<ProjectionBase>(new Lidar(3600, 1800));
 }
 // \brief get a test instance
-LeicaLidar LeicaLidar::testObject()
+Lidar Lidar::testObject()
 {
-    return LeicaLidar(3600, 1800);
+    return Lidar(3600, 1800);
 }
 
 // \brief Get the intrinsics as a concatenated vector.
 // \param[out] intrinsics The intrinsics as a concatenated vector.
-void LeicaLidar::getIntrinsics(VectorXf &) const {
+void Lidar::getIntrinsics(VectorXf &) const {
     throw std::runtime_error("not implemented");
 }
 
 // \brief overwrite all intrinsics - use with caution !
 // \param[in] intrinsics The intrinsics as a concatenated vector.
-bool LeicaLidar::setIntrinsics(const VectorXf &) {
+bool Lidar::setIntrinsics(const VectorXf &) {
     throw std::runtime_error("not implemented");
 }
 

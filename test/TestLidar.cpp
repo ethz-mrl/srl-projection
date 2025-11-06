@@ -7,24 +7,24 @@
 #include <memory>
 #include <type_traits>
 #include <vector>
-#include "srl/projection/LeicaLidar.hpp"
+#include "srl/projection/Lidar.hpp"
 
 
 
-TEST(LeicaLidar, functions)
+TEST(Lidar, functions)
 {
     const size_t NUM_POINTS = 100;
 
-    srl::projection::LeicaLidar leicaLidar = srl::projection::LeicaLidar::testObject();
+    srl::projection::Lidar lidar = srl::projection::Lidar::testObject();
 
     // try quite a lot of points:
     for (size_t i = 0; i < NUM_POINTS; ++i) {
         // create a random point in the field of view:
-        srl::Vector2f imagePoint = leicaLidar.createRandomImagePoint();
+        srl::Vector2f imagePoint = lidar.createRandomImagePoint();
 
         // backProject
         srl::Vector3f ray;
-        ASSERT_TRUE(leicaLidar.backProject(imagePoint, &ray)) << "unsuccessful back projection";
+        ASSERT_TRUE(lidar.backProject(imagePoint, &ray)) << "unsuccessful back projection";
 
         // randomise distance
         ray.normalize();
@@ -33,7 +33,7 @@ TEST(LeicaLidar, functions)
         // project
         srl::Vector2f imagePoint2;
         srl::Matrixf<2, 3> J;
-        ASSERT_TRUE(leicaLidar.project(ray, &imagePoint2, &J, nullptr)
+        ASSERT_TRUE(lidar.project(ray, &imagePoint2, &J, nullptr)
                     == srl::projection::ProjectionStatus::Successful) << "unsuccessful projection";
 
         // check they are the same
@@ -51,8 +51,8 @@ TEST(LeicaLidar, functions)
                                                     d == 2 ? dp : 0);
             srl::Vector2f imagePoint_p (-1.f, -1.f);
             srl::Vector2f imagePoint_m (-1.f, -1.f);
-            ASSERT_EQ(leicaLidar.project(point_p, &imagePoint_p), srl::projection::ProjectionStatus::Successful);
-            ASSERT_EQ(leicaLidar.project(point_m, &imagePoint_m), srl::projection::ProjectionStatus::Successful);
+            ASSERT_EQ(lidar.project(point_p, &imagePoint_p), srl::projection::ProjectionStatus::Successful);
+            ASSERT_EQ(lidar.project(point_m, &imagePoint_m), srl::projection::ProjectionStatus::Successful);
             J_numDiff.col(d) = (imagePoint_p - imagePoint_m) / (2 * dp);
 
         }

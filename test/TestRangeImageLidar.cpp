@@ -36,24 +36,24 @@
 #include <memory>
 #include <type_traits>
 #include <vector>
-#include "srl/projection/OusterLidar.hpp"
+#include "srl/projection/RangeImageLidar.hpp"
 
 
 
-TEST(OusterLidar, functions)
+TEST(RangeImageLidar, functions)
 {
   const size_t NUM_POINTS = 100;
 
-  srl::projection::OusterLidar ousterLidar = srl::projection::OusterLidar::testObject();
+  srl::projection::RangeImageLidar rangeImageLidar = srl::projection::RangeImageLidar::testObject();
 
   // try quite a lot of points:
   for (size_t i = 0; i < NUM_POINTS; ++i) {
     // create a random point in the field of view:
-    srl::Vector2f imagePoint = ousterLidar.createRandomImagePoint();
+    srl::Vector2f imagePoint = rangeImageLidar.createRandomImagePoint();
 
     // backProject
     srl::Vector3f ray;
-    ASSERT_TRUE(ousterLidar.backProject(imagePoint, &ray)) <<
+    ASSERT_TRUE(rangeImageLidar.backProject(imagePoint, &ray)) <<
                       "unsuccessful back projection";
 
     // randomise distance
@@ -63,7 +63,7 @@ TEST(OusterLidar, functions)
     // project
     srl::Vector2f imagePoint2;
     srl::Matrixf<2, 3> J;
-    ASSERT_TRUE(ousterLidar.project(ray, &imagePoint2, &J, nullptr)
+    ASSERT_TRUE(rangeImageLidar.project(ray, &imagePoint2, &J, nullptr)
             == srl::projection::ProjectionStatus::Successful) <<
                       "unsuccessful projection";
 
@@ -83,8 +83,8 @@ TEST(OusterLidar, functions)
                             d == 2 ? dp : 0);
       srl::Vector2f imagePoint_p (-1.f, -1.f);
       srl::Vector2f imagePoint_m (-1.f, -1.f);
-      ASSERT_EQ(ousterLidar.project(point_p, &imagePoint_p), srl::projection::ProjectionStatus::Successful);
-      ASSERT_EQ(ousterLidar.project(point_m, &imagePoint_m), srl::projection::ProjectionStatus::Successful);
+      ASSERT_EQ(rangeImageLidar.project(point_p, &imagePoint_p), srl::projection::ProjectionStatus::Successful);
+      ASSERT_EQ(rangeImageLidar.project(point_m, &imagePoint_m), srl::projection::ProjectionStatus::Successful);
       J_numDiff.col(d) = (imagePoint_p - imagePoint_m) / (2 * dp);
     }
     const srl::float_t threshold = std::is_same<srl::float_t, double>::value ? 1e-4 : 26;
