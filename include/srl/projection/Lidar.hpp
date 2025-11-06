@@ -2,13 +2,13 @@
 // Created by boche on 5/5/22.
 //
 /**
- * @file projection/LeicaLidar.hpp
- * @brief Header file for the LeicaLidar class.
+ * @file projection/Lidar.hpp
+ * @brief Header file for the Lidar class.
  * @author Simon Boche
  */
 
-#ifndef INCLUDE_SRL_PROJECTION_LEICALIDAR_HPP_
-#define INCLUDE_SRL_PROJECTION_LEICALIDAR_HPP_
+#ifndef INCLUDE_SRL_PROJECTION_LIDAR_HPP_
+#define INCLUDE_SRL_PROJECTION_LIDAR_HPP_
 
 #include <vector>
 #include <memory>
@@ -28,9 +28,9 @@ namespace srl {
 /// \brief Namespace for camera-related functionality.
 namespace projection {
 
-/// \class LeicaLidar
-/// \brief This implements the Leica Lidar projection model.
-class LeicaLidar : public ProjectionBase
+/// \class Lidar
+/// \brief This implements the Lidar projection model.
+class Lidar : public ProjectionBase
 {
     public:
     /// \brief Constructor that will figure out the type of distortion
@@ -38,10 +38,10 @@ class LeicaLidar : public ProjectionBase
     /// @param[in] imageHeight The height in pixels.
     /// @param[in] beamAzimuthAngles The azimuth start angles per scan row.
     /// @param[in] beamElevationAngles The elevation angle per scan row.
-    inline LeicaLidar(const int imageWidth, const int imageHeight);
+    inline Lidar(const int imageWidth, const int imageHeight);
 
     /// \brief Destructor.
-    virtual ~LeicaLidar()
+    virtual ~Lidar()
     {
     }
 
@@ -217,12 +217,12 @@ class LeicaLidar : public ProjectionBase
     /// \brief get a test instance
     static inline std::shared_ptr<ProjectionBase> createTestObject();
     /// \brief get a test instance
-    static inline LeicaLidar testObject();
+    static inline Lidar testObject();
 
     /// \brief Obtain the projection type
     std::string type() const
     {
-        return "LeicaLidar";
+        return "Lidar";
     }
 
     inline float azimuthResolutionAngle() const;
@@ -236,7 +236,7 @@ class LeicaLidar : public ProjectionBase
     protected:
 
     /// \brief No default constructor.
-    LeicaLidar() = delete;
+    Lidar() = delete;
 
     float azimuthResolution_;
     float elevationResolution_;
@@ -245,6 +245,6 @@ class LeicaLidar : public ProjectionBase
 }  // namespace projection
 }  // namespace srl
 
-#include "implementation/LeicaLidar.hpp"
+#include "implementation/Lidar.hpp"
 
-#endif /* INCLUDE_SRL_PROJECTION_LEICALIDAR_HPP_ */
+#endif /* INCLUDE_SRL_PROJECTION_LIDAR_HPP_ */

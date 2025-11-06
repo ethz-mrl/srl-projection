@@ -32,13 +32,13 @@
  *********************************************************************************/
 
 /**
- * @file projection/OusterLidar.hpp
- * @brief Header file for the OusterLidar class.
+ * @file projection/RangeImageLidar.hpp
+ * @brief Header file for the RangeImageLidar class.
  * @author Stefan Leutenegger
  */
 
-#ifndef INCLUDE_SRL_PROJECTION_OUSTERLIDAR_HPP_
-#define INCLUDE_SRL_PROJECTION_OUSTERLIDAR_HPP_
+#ifndef INCLUDE_SRL_PROJECTION_RANGEIMAGELIDAR_HPP_
+#define INCLUDE_SRL_PROJECTION_RANGEIMAGELIDAR_HPP_
 
 #include <vector>
 #include <memory>
@@ -58,9 +58,9 @@ namespace srl {
 /// \brief Namespace for camera-related functionality.
 namespace projection {
 
-/// \class OusterLidar
-/// \brief This implements the Ouster Lidar projection model.
-class OusterLidar : public ProjectionBase
+/// \class RangeImageLidar
+/// \brief This implements the Range Image Lidar projection model.
+class RangeImageLidar : public ProjectionBase
 {
  public:
   /// \brief Constructor that will figure out the type of distortion
@@ -68,11 +68,11 @@ class OusterLidar : public ProjectionBase
   /// @param[in] imageHeight The height in pixels.
   /// @param[in] beamAzimuthAngles The azimuth start angles per scan row.
   /// @param[in] beamElevationAngles The elevation angle per scan row.
-  inline OusterLidar(int imageWidth, int imageHeight, const VectorXf & beamAzimuthAngles,
+  inline RangeImageLidar(int imageWidth, int imageHeight, const VectorXf & beamAzimuthAngles,
               const VectorXf & beamElevationAngles);
 
   /// \brief Destructor.
-  virtual ~OusterLidar()
+  virtual ~RangeImageLidar()
   {
   }
 
@@ -248,12 +248,12 @@ class OusterLidar : public ProjectionBase
   /// \brief get a test instance
   static inline std::shared_ptr<ProjectionBase> createTestObject();
   /// \brief get a test instance
-  static inline OusterLidar testObject();
+  static inline RangeImageLidar testObject();
 
   /// \brief Obtain the projection type
   std::string type() const
   {
-    return "OusterLidar";
+    return "RangeImageLidar";
   }
 
   inline VectorXf beamAzimuthAngles() const;
@@ -267,7 +267,7 @@ class OusterLidar : public ProjectionBase
 protected:
 
   /// \brief No default constructor.
-  OusterLidar() = delete;
+  RangeImageLidar() = delete;
 
   VectorXf beamAzimuthAngles_;
   VectorXf beamElevationAngles_;
@@ -276,6 +276,6 @@ protected:
 }  // namespace projection
 }  // namespace srl
 
-#include "implementation/OusterLidar.hpp"
+#include "implementation/RangeImageLidar.hpp"
 
-#endif /* INCLUDE_SRL_PROJECTION_OUSTERLIDAR_HPP_ */
+#endif /* INCLUDE_SRL_PROJECTION_RANGEIMAGELIDAR_HPP_ */

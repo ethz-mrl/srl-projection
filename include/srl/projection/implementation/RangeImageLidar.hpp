@@ -32,8 +32,8 @@
  *********************************************************************************/
 
 /**
- * @file implementation/OusterLidar.hpp
- * @brief Header implementation file for the OusterLidar class.
+ * @file implementation/RangeImageLidar.hpp
+ * @brief Header implementation file for the RangeImageLidar class.
  * @author Stefan Leutenegger
  */
 
@@ -44,7 +44,7 @@ namespace srl {
 // \brief Namespace for camera-related functionality.
 namespace projection {
 
-OusterLidar::OusterLidar(int imageWidth, int imageHeight, const VectorXf & beamAzimuthAngles,
+RangeImageLidar::RangeImageLidar(int imageWidth, int imageHeight, const VectorXf & beamAzimuthAngles,
                          const VectorXf & beamElevationAngles)
     : ProjectionBase(imageWidth, imageHeight),
       beamAzimuthAngles_(beamAzimuthAngles), beamElevationAngles_(beamElevationAngles)
@@ -55,7 +55,7 @@ OusterLidar::OusterLidar(int imageWidth, int imageHeight, const VectorXf & beamA
 // Methods to project points
 
 // Projects a Euclidean point to a 2d image point (projection).
-ProjectionStatus OusterLidar::project(
+ProjectionStatus RangeImageLidar::project(
     const Vector3f & point, Vector2f * imagePoint) const
 {
   // handle singularity
@@ -132,7 +132,7 @@ ProjectionStatus OusterLidar::project(
 }
 
 // Projects a Euclidean point to a 2d image point (projection).
-ProjectionStatus OusterLidar::project(
+ProjectionStatus RangeImageLidar::project(
     const Vector3f & point, Vector2f * imagePoint,
     Matrixf<2, 3> * pointJacobian,
     Matrix2Xf * intrinsicsJacobian) const
@@ -207,7 +207,7 @@ ProjectionStatus OusterLidar::project(
 
   }
   if(intrinsicsJacobian) {
-    throw std::runtime_error("OusterLidar does not support intrinsics Jacobian");
+    throw std::runtime_error("RangeImageLidar does not support intrinsics Jacobian");
   }
 
   // checks
@@ -217,7 +217,7 @@ ProjectionStatus OusterLidar::project(
   return ProjectionStatus::Successful;
 }
 
-ProjectionStatus OusterLidar::projectSphere(
+ProjectionStatus RangeImageLidar::projectSphere(
     const Vector3f& center,
     float radius,
     Vector2f* imageCenter,
@@ -311,17 +311,17 @@ ProjectionStatus OusterLidar::projectSphere(
 
 
 // Projects a Euclidean point to a 2d image point (projection).
-ProjectionStatus OusterLidar::projectWithExternalParameters(
+ProjectionStatus RangeImageLidar::projectWithExternalParameters(
     const Vector3f &, const VectorXf &,
     Vector2f *, Matrixf<2, 3> *,
     Matrix2Xf *) const
 {
-  throw std::runtime_error("external parameters projection for OusterLidar not implemented");
+  throw std::runtime_error("external parameters projection for RangeImageLidar not implemented");
   return ProjectionStatus::Invalid;
 }
 
 // Projects Euclidean points to 2d image points (projection) in a batch.
-void OusterLidar::projectBatch(
+void RangeImageLidar::projectBatch(
     const Matrix3Xf & points, Matrix2Xf * imagePoints,
     std::vector<ProjectionStatus> * stati) const
 {
@@ -337,7 +337,7 @@ void OusterLidar::projectBatch(
 }
 
 // Projects a point in homogenous coordinates to a 2d image point (projection).
-ProjectionStatus OusterLidar::projectHomogeneous(
+ProjectionStatus RangeImageLidar::projectHomogeneous(
     const Vector4f & point, Vector2f * imagePoint) const
 {
   Vector3f head = point.head<3>();
@@ -349,7 +349,7 @@ ProjectionStatus OusterLidar::projectHomogeneous(
 }
 
 // Projects a point in homogenous coordinates to a 2d image point (projection).
-ProjectionStatus OusterLidar::projectHomogeneous(
+ProjectionStatus RangeImageLidar::projectHomogeneous(
     const Vector4f & point, Vector2f * imagePoint,
     Matrixf<2, 4> * pointJacobian,
     Matrix2Xf * intrinsicsJacobian) const
@@ -368,17 +368,17 @@ ProjectionStatus OusterLidar::projectHomogeneous(
 }
 
 // Projects a point in homogenous coordinates to a 2d image point (projection).
-ProjectionStatus OusterLidar::projectHomogeneousWithExternalParameters(
+ProjectionStatus RangeImageLidar::projectHomogeneousWithExternalParameters(
     const Vector4f &, const VectorXf &,
     Vector2f *, Matrixf<2, 4> *,
     Matrix2Xf *) const
 {
-  throw std::runtime_error("intrinsics Jacobian for OusterLidar not implemented");
+  throw std::runtime_error("intrinsics Jacobian for RangeImageLidar not implemented");
   return ProjectionStatus::Invalid;
 }
 
 // Projects points in homogenous coordinates to 2d image points (projection) in a batch.
-void OusterLidar::projectHomogeneousBatch(
+void RangeImageLidar::projectHomogeneousBatch(
     const Matrix4Xf & points, Matrix2Xf * imagePoints,
     std::vector<ProjectionStatus> * stati) const
 {
@@ -397,7 +397,7 @@ void OusterLidar::projectHomogeneousBatch(
 // Methods to backproject points
 
 // Back-project a 2d image point into Euclidean space (direction vector).
-bool OusterLidar::backProject(
+bool RangeImageLidar::backProject(
     const Vector2f & imagePoint, Vector3f * direction) const
 {
   // adapted from
@@ -426,7 +426,7 @@ bool OusterLidar::backProject(
 }
 
 // Back-project a 2d image point into Euclidean space (direction vector).
-inline bool OusterLidar::backProject(
+inline bool RangeImageLidar::backProject(
     const Vector2f & imagePoint, Vector3f * direction,
     Matrixf<3, 2> * pointJacobian) const
 {
@@ -459,7 +459,7 @@ inline bool OusterLidar::backProject(
 }
 
 // Back-project 2d image points into Euclidean space (direction vectors).
-bool OusterLidar::backProjectBatch(
+bool RangeImageLidar::backProjectBatch(
     const Matrix2Xf & imagePoints, Matrix3Xf * directions,
     std::vector<bool> * success) const
 {
@@ -476,7 +476,7 @@ bool OusterLidar::backProjectBatch(
 }
 
 // Back-project a 2d image point into homogeneous point (direction vector).
-bool OusterLidar::backProjectHomogeneous(
+bool RangeImageLidar::backProjectHomogeneous(
     const Vector2f & imagePoint, Vector4f * direction) const
 {
   Vector3f ray;
@@ -487,7 +487,7 @@ bool OusterLidar::backProjectHomogeneous(
 }
 
 // Back-project a 2d image point into homogeneous point (direction vector).
-bool OusterLidar::backProjectHomogeneous(
+bool RangeImageLidar::backProjectHomogeneous(
     const Vector2f & imagePoint, Vector4f * direction,
     Matrixf<4, 2> * pointJacobian) const
 {
@@ -502,7 +502,7 @@ bool OusterLidar::backProjectHomogeneous(
 }
 
 // Back-project 2d image points into homogeneous points (direction vectors).
-bool OusterLidar::backProjectHomogeneousBatch(
+bool RangeImageLidar::backProjectHomogeneousBatch(
     const Matrix2Xf & imagePoints, Matrix4Xf * directions,
     std::vector<bool> * success) const
 {
@@ -519,22 +519,22 @@ bool OusterLidar::backProjectHomogeneousBatch(
   return true;
 }
 
-VectorXf OusterLidar::beamAzimuthAngles() const
+VectorXf RangeImageLidar::beamAzimuthAngles() const
 {
   return beamAzimuthAngles_;
 }
 
-void OusterLidar::setBeamAzimuthAngles(const VectorXf &beamAzimuthAngles)
+void RangeImageLidar::setBeamAzimuthAngles(const VectorXf &beamAzimuthAngles)
 {
   beamAzimuthAngles_ = beamAzimuthAngles;
 }
 
-VectorXf OusterLidar::beamElevationAngles() const
+VectorXf RangeImageLidar::beamElevationAngles() const
 {
   return beamElevationAngles_;
 }
 
-void OusterLidar::setBeamElevationAngles(const VectorXf &beamElevationAngles)
+void RangeImageLidar::setBeamElevationAngles(const VectorXf &beamElevationAngles)
 {
   beamElevationAngles_ = beamElevationAngles;
 }
@@ -561,26 +561,26 @@ const VectorXf beam_azimuth_angles = (VectorXf(64) <<
     3.164, 1.055, -1.055, -3.164, 3.164, 1.055, -1.055, -3.164).finished();
 
 // get a test instance
-std::shared_ptr<ProjectionBase> OusterLidar::createTestObject()
+std::shared_ptr<ProjectionBase> RangeImageLidar::createTestObject()
 {
-  return std::shared_ptr<ProjectionBase>(new OusterLidar(2048, 64, beam_azimuth_angles,
+  return std::shared_ptr<ProjectionBase>(new RangeImageLidar(2048, 64, beam_azimuth_angles,
                                                      beam_altitude_angles));
 }
 // \brief get a test instance
-OusterLidar OusterLidar::testObject()
+RangeImageLidar RangeImageLidar::testObject()
 {
-  return OusterLidar(2048, 64, beam_azimuth_angles, beam_altitude_angles);
+  return RangeImageLidar(2048, 64, beam_azimuth_angles, beam_altitude_angles);
 }
 
 // \brief Get the intrinsics as a concatenated vector.
 // \param[out] intrinsics The intrinsics as a concatenated vector.
-void OusterLidar::getIntrinsics(VectorXf &) const {
+void RangeImageLidar::getIntrinsics(VectorXf &) const {
   throw std::runtime_error("not implemented");
 }
 
 // \brief overwrite all intrinsics - use with caution !
 // \param[in] intrinsics The intrinsics as a concatenated vector.
-bool OusterLidar::setIntrinsics(const VectorXf &) {
+bool RangeImageLidar::setIntrinsics(const VectorXf &) {
   throw std::runtime_error("not implemented");
 }
 
