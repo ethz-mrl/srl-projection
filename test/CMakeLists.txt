@@ -2,14 +2,13 @@ cmake_minimum_required(VERSION 3.1...3.16)
 
 set(CMAKE_THREAD_PREFER_PTHREAD ON)
 find_package(Threads REQUIRED)
-find_package(GTest REQUIRED)
 
 add_executable(srl_projection_test "TestPinholeCamera.cpp" "TestRangeImageLidar.cpp" "TestLidar.cpp")
-target_include_directories(srl_projection_test PRIVATE ${GTEST_INCLUDE_DIRS})
+target_include_directories(srl_projection_test PRIVATE)
 target_link_libraries(srl_projection_test
   PRIVATE
     SRL::Projection
-    ${GTEST_BOTH_LIBRARIES}
+    gtest_main
     ${CMAKE_THREAD_LIBS_INIT}
 )
 set_target_properties(${LIB_NAME} PROPERTIES

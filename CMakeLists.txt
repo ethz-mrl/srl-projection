@@ -25,6 +25,9 @@ else()
   message(STATUS "CMAKE_BUILD_TYPE set to ${CMAKE_BUILD_TYPE}.")
 endif()
 
+# Compile the dependencies
+add_subdirectory(third_party)
+
 # Create the library ###############################################################################
 # Find dependencies
 find_package(Eigen3 REQUIRED)
