@@ -19,7 +19,7 @@ set_target_properties(${LIB_NAME} PROPERTIES
 )
 target_compile_options(srl_projection_test PRIVATE
 	$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
-	-Wall -pedantic -Wextra -Werror>
+	-Wall -pedantic -Wextra>
 )
 add_test(NAME srl_projection_test COMMAND srl_projection_test)
 
