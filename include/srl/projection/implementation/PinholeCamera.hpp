@@ -154,7 +154,9 @@ bool PinholeCamera<DISTORTION_T>::initialiseUndistortMaps(
       projectedPoint = rayTransformed.hnormalized();
 
       // Apply the distortion model to the projection
-      distortion_.distort(projectedPoint,&distortedPoint);
+      if (!distortion_.distort(projectedPoint,&distortedPoint)) {
+        return false;
+      }
 
       // Apply the intrinsics model to get a pixel location
       mappedPixel = (actualK * distortedPoint) + actualCenter;
