@@ -438,7 +438,10 @@ void PinholeCamera<DISTORTION_T>::projectBatch(
     Vector3f point = points.col(i);
     Vector2f imagePoint;
     ProjectionStatus status = project(point, &imagePoint);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
     imagePoints->col(i) = imagePoint;
+#pragma GCC diagnostic pop
     if(stati)
       stati->push_back(status);
   }
@@ -477,7 +480,10 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::projectHomogeneous(
                                                   intrinsicsJacobian);
   }
   pointJacobian->template bottomRightCorner<2, 1>() = Vector2f::Zero();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
   pointJacobian->template topLeftCorner<2, 3>() = pointJacobian3;
+#pragma GCC diagnostic pop
   return status;
 }
 
@@ -501,7 +507,10 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::projectHomogeneousWithExternalPara
                                                   intrinsicsJacobian);
   }
   pointJacobian->template bottomRightCorner<2, 1>() = Vector2f::Zero();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
   pointJacobian->template topLeftCorner<2, 3>() = pointJacobian3;
+#pragma GCC diagnostic pop
   return status;
 }
 
@@ -516,7 +525,10 @@ void PinholeCamera<DISTORTION_T>::projectHomogeneousBatch(
     Vector4f point = points.col(i);
     Vector2f imagePoint;
     ProjectionStatus status = projectHomogeneous(point, &imagePoint);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
     imagePoints->col(i) = imagePoint;
+#pragma GCC diagnostic pop
     if(stati)
       stati->push_back(status);
   }
@@ -622,7 +634,10 @@ bool PinholeCamera<DISTORTION_T>::backProjectHomogeneous(
   direction->template head<3>() = ray;
   (*direction)[3] = 1.0;  // arbitrary
   pointJacobian->template bottomRightCorner<1,2>() = Vector2f::Zero();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
   pointJacobian->template topLeftCorner<3, 2>() = pointJacobian3;
+#pragma GCC diagnostic pop
   return success;
 }
 

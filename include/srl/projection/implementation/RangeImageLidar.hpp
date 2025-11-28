@@ -330,7 +330,10 @@ void RangeImageLidar::projectBatch(
     Vector3f point = points.col(i);
     Vector2f imagePoint;
     ProjectionStatus status = project(point, &imagePoint);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
     imagePoints->col(i) = imagePoint;
+#pragma GCC diagnostic pop
     if(stati)
       stati->push_back(status);
   }
@@ -363,7 +366,10 @@ ProjectionStatus RangeImageLidar::projectHomogeneous(
     status = project(head, imagePoint, &pointJacobian3, intrinsicsJacobian);
   }
   pointJacobian->template bottomRightCorner<2, 1>() = Vector2f::Zero();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
   pointJacobian->template topLeftCorner<2, 3>() = pointJacobian3;
+#pragma GCC diagnostic pop
   return status;
 }
 
@@ -387,7 +393,10 @@ void RangeImageLidar::projectHomogeneousBatch(
     Vector4f point = points.col(i);
     Vector2f imagePoint;
     ProjectionStatus status = projectHomogeneous(point, &imagePoint);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
     imagePoints->col(i) = imagePoint;
+#pragma GCC diagnostic pop
     if(stati)
       stati->push_back(status);
   }
