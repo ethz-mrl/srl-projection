@@ -214,13 +214,13 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::project(
     const Vector3f & point, Vector2f * imagePoint) const
 {
   // handle singularity
-  if (fabs(point[2]) < 1.0e-12) {
+  if (std::fabs(point[2]) < float_t(1.0e-12)) {
     return ProjectionStatus::Invalid;
   }
 
   // projection
   Vector2f imagePointUndistorted;
-  const float_t rz = 1.0 / point[2];
+  const float_t rz = float_t(1) / point[2];
   imagePointUndistorted[0] = point[0] * rz;
   imagePointUndistorted[1] = point[1] * rz;
 
@@ -240,7 +240,7 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::project(
   if (ProjectionBase::isMasked(*imagePoint)) {
     return ProjectionStatus::Masked;
   }
-  if(point[2]>0.0){
+  if (point[2] > float_t(0)) {
     return ProjectionStatus::Successful;
   } else {
     return ProjectionStatus::Behind;
@@ -255,13 +255,13 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::project(
     Matrix2Xf * intrinsicsJacobian) const
 {
   // handle singularity
-  if (fabs(point[2]) < 1.0e-12) {
+  if (std::fabs(point[2]) < float_t(1.0e-12)) {
     return ProjectionStatus::Invalid;
   }
 
   // projection
   Vector2f imagePointUndistorted;
-  const float_t rz = 1.0 / point[2];
+  const float_t rz = float_t(1) / point[2];
   float_t rz2 = rz * rz;
   imagePointUndistorted[0] = point[0] * rz;
   imagePointUndistorted[1] = point[1] * rz;
@@ -322,7 +322,7 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::project(
   if (ProjectionBase::isMasked(*imagePoint)) {
     return ProjectionStatus::Masked;
   }
-  if(point[2]>0.0){
+  if (point[2] > float_t(0)) {
     return ProjectionStatus::Successful;
   } else {
     return ProjectionStatus::Behind;
@@ -337,7 +337,7 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::projectWithExternalParameters(
     Matrix2Xf * intrinsicsJacobian) const
 {
   // handle singularity
-  if (fabs(point[2]) < 1.0e-12) {
+  if (std::fabs(point[2]) < float_t(1.0e-12)) {
     return ProjectionStatus::Invalid;
   }
 
@@ -355,7 +355,7 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::projectWithExternalParameters(
 
   // projection
   Vector2f imagePointUndistorted;
-  const float_t rz = 1.0 / point[2];
+  const float_t rz = float_t(1) / point[2];
   float_t rz2 = rz * rz;
   imagePointUndistorted[0] = point[0] * rz;
   imagePointUndistorted[1] = point[1] * rz;
@@ -420,7 +420,7 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::projectWithExternalParameters(
   if (ProjectionBase::isMasked(*imagePoint)) {
     return ProjectionStatus::Masked;
   }
-  if(point[2]>0.0){
+  if (point[2] > float_t(0)){
     return ProjectionStatus::Successful;
   } else {
     return ProjectionStatus::Behind;
