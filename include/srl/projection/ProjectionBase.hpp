@@ -223,9 +223,9 @@ struct ProjectionBase
   /// @param[out] imagePoints The image points (one point per column).
   /// @param[out] stati       Get information about the success of the projections. See
   ///                         \ref ProjectionStatus for more information.
-  virtual void projectHomogeneousBatch(
-      const Matrix4Xf & points, Matrix2Xf * imagePoints,
-      std::vector<ProjectionStatus> * stati) const = 0;
+  virtual inline void projectHomogeneousBatch(const Matrix4Xf& points,
+                                              Matrix2Xf* imagePoints,
+                                              std::vector<ProjectionStatus>* stati) const;
   /// @}
 
   //////////////////////////////////////////////////////////////

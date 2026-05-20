@@ -315,22 +315,6 @@ ProjectionStatus Lidar::projectHomogeneousWithExternalParameters(
     return ProjectionStatus::Invalid;
 }
 
-// Projects points in homogenous coordinates to 2d image points (projection) in a batch.
-void Lidar::projectHomogeneousBatch(
-    const Matrix4Xf & points, Matrix2Xf * imagePoints,
-    std::vector<ProjectionStatus> * stati) const
-{
-    const int numPoints = points.cols();
-    for (int i = 0; i < numPoints; ++i) {
-        Vector4f point = points.col(i);
-        Vector2f imagePoint;
-        ProjectionStatus status = projectHomogeneous(point, &imagePoint);
-        imagePoints->col(i) = imagePoint;
-        if(stati)
-            stati->push_back(status);
-    }
-}
-
 //////////////////////////////////////////
 // Methods to backproject points
 

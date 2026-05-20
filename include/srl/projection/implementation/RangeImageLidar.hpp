@@ -364,25 +364,6 @@ ProjectionStatus RangeImageLidar::projectHomogeneousWithExternalParameters(
   return ProjectionStatus::Invalid;
 }
 
-// Projects points in homogenous coordinates to 2d image points (projection) in a batch.
-void RangeImageLidar::projectHomogeneousBatch(
-    const Matrix4Xf & points, Matrix2Xf * imagePoints,
-    std::vector<ProjectionStatus> * stati) const
-{
-  const int numPoints = points.cols();
-  for (int i = 0; i < numPoints; ++i) {
-    Vector4f point = points.col(i);
-    Vector2f imagePoint;
-    ProjectionStatus status = projectHomogeneous(point, &imagePoint);
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-    imagePoints->col(i) = imagePoint;
-#pragma GCC diagnostic pop
-    if(stati)
-      stati->push_back(status);
-  }
-}
-
 //////////////////////////////////////////
 // Methods to backproject points
 

@@ -181,24 +181,6 @@ ProjectionStatus EquirectangularCamera::projectHomogeneousWithExternalParameters
       parameters[1]).projectHomogeneous(point, imagePoint, pointJacobian, intrinsicsJacobian);
 }
 
-void EquirectangularCamera::projectHomogeneousBatch(const Matrix4Xf& points,
-                                              Matrix2Xf* imagePoints,
-                                              std::vector<ProjectionStatus>* stati) const
-{
-  assert(imagePoints);
-  for (int i = 0; i < points.cols(); ++i) {
-    Vector2f imagePoint;
-    const ProjectionStatus status = projectHomogeneous(points.col(i), &imagePoint);
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-    imagePoints->col(i) = imagePoint;
-#pragma GCC diagnostic pop
-    if (stati) {
-      stati->push_back(status);
-    }
-  }
-}
-
 //////////////////////////////////////////
 // Methods to backproject points
 
