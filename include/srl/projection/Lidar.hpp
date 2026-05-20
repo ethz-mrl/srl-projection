@@ -30,9 +30,8 @@ namespace projection {
 
 /// \class Lidar
 /// \brief This implements the Lidar projection model.
-class Lidar : public ProjectionBase
+struct Lidar : public ProjectionBase
 {
-    public:
     /// \brief Constructor that will figure out the type of distortion
     /// @param[in] imageWidth The width in pixels.
     /// @param[in] imageHeight The height in pixels.

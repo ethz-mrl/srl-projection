@@ -60,9 +60,8 @@ namespace projection {
 
 /// \class RangeImageLidar
 /// \brief This implements the Range Image Lidar projection model.
-class RangeImageLidar : public ProjectionBase
+struct RangeImageLidar : public ProjectionBase
 {
- public:
   /// \brief Constructor that will figure out the type of distortion
   /// @param[in] imageWidth The width in pixels.
   /// @param[in] imageHeight The height in pixels.

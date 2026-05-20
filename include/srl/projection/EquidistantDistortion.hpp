@@ -51,9 +51,8 @@ namespace projection {
 
 /// \class EquidistantDistortion
 /// \brief Implements equidistant distortion.
-class EquidistantDistortion : public DistortionBase
+struct EquidistantDistortion : public DistortionBase
 {
- public:
   /// \brief The default constructor with all zero ki
   inline EquidistantDistortion();
 

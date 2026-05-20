@@ -52,9 +52,8 @@ namespace projection {
 /// \class NoDistortion
 /// \brief This trivially doesn't do anything in terms of distortion.
 /// This is useful for testing, or working with pre-undistorted images.
-class NoDistortion : public DistortionBase
+struct NoDistortion : public DistortionBase
 {
- public:
   /// \brief Destructor, not doing anything
   inline ~NoDistortion()
   {

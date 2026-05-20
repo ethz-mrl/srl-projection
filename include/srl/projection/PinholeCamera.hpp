@@ -65,8 +65,7 @@ class PinholeCamera; // forward declaration
 
 /// \class PinholeCameraBase
 /// \brief This is an interface for all the different distortion versions, allowing generic undistortion.
-class PinholeCameraBase : public ProjectionBase {
- public:
+struct PinholeCameraBase : public ProjectionBase {
   /// \brief Constructor for width, height and Id
   inline PinholeCameraBase(int imageWidth, int imageHeight)
         : ProjectionBase(imageWidth, imageHeight)

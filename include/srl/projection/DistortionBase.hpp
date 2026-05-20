@@ -50,9 +50,8 @@ namespace projection {
 
 /// \class DistortionBase
 /// \brief Base class for all distortion models.
-class DistortionBase
+struct DistortionBase
 {
- public:
   /// \brief Destructor -- not doing anything
   virtual ~DistortionBase()
   {

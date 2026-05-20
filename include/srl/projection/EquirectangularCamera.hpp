@@ -36,9 +36,8 @@ namespace projection {
 ///
 /// - https://en.wikipedia.org/wiki/Equirectangular_projection
 /// - https://en.wikipedia.org/wiki/Spherical_coordinate_system
-class EquirectangularCamera : public ProjectionBase
+struct EquirectangularCamera : public ProjectionBase
 {
- public:
   /// \param[in] imageWidth The image width in pixels.
   /// \param[in] imageHeight The image height in pixels.
   /// \param[in] horizontalFov The horizontal field of view in radians in the interval (0, 2π].

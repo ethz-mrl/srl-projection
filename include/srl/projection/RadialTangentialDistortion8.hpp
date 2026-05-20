@@ -49,9 +49,8 @@ namespace srl {
 /// \brief Namespace for camera-related functionality.
 namespace projection {
 
-class RadialTangentialDistortion8 : public DistortionBase
+struct RadialTangentialDistortion8 : public DistortionBase
 {
- public:
   /// \brief The default constructor with all zero ki
   inline RadialTangentialDistortion8();
 

@@ -71,9 +71,8 @@ enum class ProjectionStatus
 
 /// \class ProjectionBase
 /// \brief Base class for all camera models.
-class ProjectionBase
+struct ProjectionBase
 {
- public:
   /// \brief default Constructor -- does nothing serious
   inline ProjectionBase()
       : imageWidth_(0),
