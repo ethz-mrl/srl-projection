@@ -85,7 +85,7 @@ struct RangeImageLidar : public ProjectionBase
 
   /// \brief Get the total number of intrinsics.
   /// \return Number of intrinsics parameters.
-  inline int numIntrinsicsParameters() const
+  int numIntrinsicsParameters() const
   {
     return -1;
   }

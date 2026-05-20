@@ -74,21 +74,21 @@ enum class ProjectionStatus
 struct ProjectionBase
 {
   /// \brief default Constructor -- does nothing serious
-  inline ProjectionBase()
+  ProjectionBase()
       : imageWidth_(0),
         imageHeight_(0)
   {
   }
 
   /// \brief Constructor for width, height and Id
-  inline ProjectionBase(int imageWidth, int imageHeight)
+  ProjectionBase(int imageWidth, int imageHeight)
         : imageWidth_(imageWidth),
           imageHeight_(imageHeight)
     {
     }
 
   /// \brief Destructor -- does nothing
-  inline virtual ~ProjectionBase()
+  virtual ~ProjectionBase()
   {
   }
 
@@ -116,12 +116,12 @@ struct ProjectionBase
   /// @}
 
   /// \brief The width of the image in pixels.
-  inline int imageWidth() const
+  int imageWidth() const
   {
     return imageWidth_;
   }
   /// \brief The height of the image in pixels.
-  inline int imageHeight() const
+  int imageHeight() const
   {
     return imageHeight_;
   }
@@ -318,7 +318,7 @@ struct ProjectionBase
 
   /// \brief Check if the keypoint is masked.
   inline bool isMasked(const Vector2f& imagePoint) const;
-  
+
   cv::Mat mask_;  ///< The mask -- empty by default
 
   int imageWidth_;  ///< image width in pixels

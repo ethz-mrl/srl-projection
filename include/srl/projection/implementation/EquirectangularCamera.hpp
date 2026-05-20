@@ -225,9 +225,9 @@ bool EquirectangularCamera::backProject(const Vector2f& imagePoint, Vector3f* di
   return backProject(imagePoint, direction, nullptr);
 }
 
-inline bool EquirectangularCamera::backProject(const Vector2f& imagePoint,
-                                         Vector3f* direction,
-                                         Matrixf<3, 2>* pointJacobian) const
+bool EquirectangularCamera::backProject(const Vector2f& imagePoint,
+                                        Vector3f* direction,
+                                        Matrixf<3, 2>* pointJacobian) const
 {
   assert(direction);
   // Azimuth is horizontalFov/2 at the left edge of the image and -horizontalFov/2 at the right

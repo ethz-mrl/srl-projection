@@ -375,7 +375,7 @@ bool Lidar::backProject(
 }
 
 // Back-project a 2d image point into Euclidean space (direction vector).
-inline bool Lidar::backProject(
+bool Lidar::backProject(
     const Vector2f & imagePoint, Vector3f * direction,
     Matrixf<3, 2> * pointJacobian) const
 {

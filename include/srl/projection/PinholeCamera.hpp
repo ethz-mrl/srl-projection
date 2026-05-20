@@ -67,7 +67,7 @@ class PinholeCamera; // forward declaration
 /// \brief This is an interface for all the different distortion versions, allowing generic undistortion.
 struct PinholeCameraBase : public ProjectionBase {
   /// \brief Constructor for width, height and Id
-  inline PinholeCameraBase(int imageWidth, int imageHeight)
+  PinholeCameraBase(int imageWidth, int imageHeight)
         : ProjectionBase(imageWidth, imageHeight)
   {
   }
@@ -193,7 +193,7 @@ class PinholeCamera : public PinholeCameraBase
 
   /// \brief Get the total number of intrinsics.
   /// \return Number of intrinsics parameters.
-  inline int numIntrinsicsParameters() const
+  int numIntrinsicsParameters() const
   {
     return NumIntrinsics;
   }

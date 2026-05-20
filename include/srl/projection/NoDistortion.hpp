@@ -55,7 +55,7 @@ namespace projection {
 struct NoDistortion : public DistortionBase
 {
   /// \brief Destructor, not doing anything
-  inline ~NoDistortion()
+  ~NoDistortion()
   {
   }
 

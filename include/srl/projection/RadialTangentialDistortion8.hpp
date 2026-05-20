@@ -77,20 +77,20 @@ struct RadialTangentialDistortion8 : public DistortionBase
   inline bool setParameters(const VectorXf & parameters);
 
   /// \brief Obtain the generic parameters.
-  inline bool getParameters(VectorXf & parameters) const
+  bool getParameters(VectorXf & parameters) const
   {
     parameters = parameters_;
     return true;
   }
 
   /// \brief The class type.
-  inline std::string type() const
+  std::string type() const
   {
     return "RadialTangentialDistortion8";
   }
 
   /// \brief Number of distortion parameters
-  inline int numDistortionIntrinsics() const
+  int numDistortionIntrinsics() const
   {
     return NumDistortionIntrinsics;
   }

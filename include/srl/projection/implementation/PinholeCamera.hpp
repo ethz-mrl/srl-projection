@@ -561,7 +561,7 @@ bool PinholeCamera<DISTORTION_T>::backProject(
 
 // Back-project a 2d image point into Euclidean space (direction vector).
 template<class DISTORTION_T>
-inline bool PinholeCamera<DISTORTION_T>::backProject(
+bool PinholeCamera<DISTORTION_T>::backProject(
     const Vector2f & imagePoint, Vector3f * direction,
     Matrixf<3, 2> * pointJacobian) const
 {
