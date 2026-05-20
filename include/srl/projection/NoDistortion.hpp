@@ -64,27 +64,27 @@ struct NoDistortion : public DistortionBase
   /// \brief set the generic parameters
   /// @param[in] parameters Parameter vector -- length must correspond numDistortionIntrinsics().
   /// @return    True if the requirements were followed.
-  bool setParameters(const VectorXf & parameters)
+  bool setParameters(const VectorXf & parameters) override
   {
     (void)parameters;
     return true;
   }
 
   /// \brief Obtain the generic parameters.
-  bool getParameters(VectorXf & parameters) const
+  bool getParameters(VectorXf & parameters) const override
   {
     parameters.resize(0);
     return true;
   }
 
   /// \brief The class type.
-  std::string type() const
+  std::string type() const override
   {
     return "NoDistortion";
   }
 
   /// \brief Number of derived class distortion parameters
-  int numDistortionIntrinsics() const
+  int numDistortionIntrinsics() const override
   {
     return 0;
   }
@@ -110,7 +110,7 @@ struct NoDistortion : public DistortionBase
   /// @param[out] pointDistorted   The distorted normalised (!) image point.
   /// @return     True on success (no singularity)
   bool distort(const Vector2f & pointUndistorted,
-                       Vector2f * pointDistorted) const
+                       Vector2f * pointDistorted) const override
   {
     *pointDistorted = pointUndistorted;
     return true;
@@ -125,7 +125,7 @@ struct NoDistortion : public DistortionBase
   bool distort(const Vector2f & pointUndistorted,
                        Vector2f * pointDistorted,
                        Matrix2f * pointJacobian,
-                       Matrix2Xf * parameterJacobian = nullptr) const
+                       Matrix2Xf * parameterJacobian = nullptr) const override
   {
     *pointDistorted = pointUndistorted;
     *pointJacobian = Matrix2f::Identity();
@@ -146,7 +146,7 @@ struct NoDistortion : public DistortionBase
       const Vector2f & pointUndistorted,
       const VectorXf & parameters, Vector2f * pointDistorted,
       Matrix2f * pointJacobian = nullptr,
-      Matrix2Xf * parameterJacobian = nullptr) const
+      Matrix2Xf * parameterJacobian = nullptr) const override
   {
     (void)parameters;
     *pointDistorted = pointUndistorted;
@@ -169,7 +169,7 @@ struct NoDistortion : public DistortionBase
   /// @param[out] pointUndistorted The undistorted normalised (!) image point.
   /// @return     True on success (no singularity)
   bool undistort(const Vector2f & pointDistorted,
-                 Vector2f * pointUndistorted) const
+                 Vector2f * pointUndistorted) const override
   {
     *pointUndistorted = pointDistorted;
     return true;
@@ -182,7 +182,7 @@ struct NoDistortion : public DistortionBase
   /// @return     True on success (no singularity)
   bool undistort(const Vector2f & pointDistorted,
                          Vector2f * pointUndistorted,
-                         Matrix2f * pointJacobian) const
+                         Matrix2f * pointJacobian) const override
   {
     *pointUndistorted = pointDistorted;
     *pointJacobian = Matrix2f::Identity();

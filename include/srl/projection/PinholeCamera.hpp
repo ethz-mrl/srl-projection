@@ -153,28 +153,28 @@ class PinholeCamera : public PinholeCameraBase
 
   /// \brief Get the focal length along the u-dimension.
   /// \return The horizontal focal length in pixels.
-  virtual float_t focalLengthU() const
+  float_t focalLengthU() const override
   {
     return fu_;
   }
 
   /// \brief Get the focal length along the v-dimension.
   /// \return The vertical focal length in pixels.
-  virtual float_t focalLengthV() const
+  float_t focalLengthV() const override
   {
     return fv_;
   }
 
   /// \brief Get the image centre along the u-dimension.
   /// \return The horizontal centre in pixels.
-  virtual float_t imageCenterU() const
+  float_t imageCenterU() const override
   {
     return cu_;
   }
 
   /// \brief Get the focal image centre along the v-dimension.
   /// \return The vertical centre in pixels.
-  virtual float_t imageCenterV() const
+  float_t imageCenterV() const override
   {
     return cv_;
   }
@@ -199,7 +199,7 @@ class PinholeCamera : public PinholeCameraBase
   /// same image dimensions and center in the middle, i.e
   /// undistortedImageCenterU() = 0.5 * imageWith() + 0.5.
   /// \return True on success.
-  virtual bool initialiseUndistortMaps();
+  bool initialiseUndistortMaps() override;
 
   /// \brief Initialise undistort maps, provide custom parameters for the undistorted cam.
   /// @param[in] undistortedImageWidth The width in pixels.
@@ -209,19 +209,19 @@ class PinholeCamera : public PinholeCameraBase
   /// @param[in] undistortedImageCenterU The horizontal centre in pixels.
   /// @param[in] undistortedImageCenterV The vertical centre in pixels.
   /// \return True on success.
-  virtual bool initialiseUndistortMaps(int undistortedImageWidth, int undistortedImageHeight,
+  bool initialiseUndistortMaps(int undistortedImageWidth, int undistortedImageHeight,
       float_t undistortedFocalLengthU, float_t undistortedFocalLengthV,
-      float_t undistortedImageCenterU, float_t undistortedImageCenterV);
+      float_t undistortedImageCenterU, float_t undistortedImageCenterV) override;
 
   /// \brief Get the model of the undistorted camera.
   /// \return The PinholeCamera without distortion associated with the undistorted image.
-  virtual PinholeCamera<NoDistortion> undistortedPinholeCamera() const;
+  PinholeCamera<NoDistortion> undistortedPinholeCamera() const override;
 
   /// \brief Get undistorted image -- assumes initialiseUndistortMaps was called
   /// @param[in] srcImg The distorted input image.
   /// @param[out] destImg The undistorted output image.
   /// \return True on success.
-  virtual bool undistortImage(const cv::Mat & srcImg, cv::Mat & destImg) const;
+  bool undistortImage(const cv::Mat & srcImg, cv::Mat & destImg) const override;
 
   //////////////////////////////////////////////////////////////
   /// \name Methods to project points

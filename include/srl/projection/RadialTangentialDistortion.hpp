@@ -68,23 +68,23 @@ struct RadialTangentialDistortion : public DistortionBase
   /// \brief set the generic parameters
   /// @param[in] parameters Parameter vector -- length must correspond numDistortionIntrinsics().
   /// @return    True if the requirements were followed.
-  inline bool setParameters(const VectorXf & parameters);
+  inline bool setParameters(const VectorXf & parameters) override;
 
   /// \brief Obtain the generic parameters.
-  bool getParameters(VectorXf & parameters) const
+  bool getParameters(VectorXf & parameters) const override
   {
     parameters = parameters_;
     return true;
   }
 
   /// \brief The class type.
-  std::string type() const
+  std::string type() const override
   {
     return "RadialTangentialDistortion";
   }
 
   /// \brief Number of distortion parameters
-  int numDistortionIntrinsics() const
+  int numDistortionIntrinsics() const override
   {
     return NumDistortionIntrinsics;
   }
@@ -113,7 +113,7 @@ struct RadialTangentialDistortion : public DistortionBase
   /// @param[out] pointDistorted   The distorted normalised (!) image point.
   /// @return     True on success (no singularity)
   inline bool distort(const Vector2f & pointUndistorted,
-                      Vector2f * pointDistorted) const;
+                      Vector2f * pointDistorted) const override;
 
   /// \brief Distortion and Jacobians.
   /// @param[in]  pointUndistorted  The undistorted normalised (!) image point.
@@ -124,7 +124,7 @@ struct RadialTangentialDistortion : public DistortionBase
   inline bool distort(const Vector2f & pointUndistorted,
                       Vector2f * pointDistorted,
                       Matrix2f * pointJacobian,
-                      Matrix2Xf * parameterJacobian = nullptr) const;
+                      Matrix2Xf * parameterJacobian = nullptr) const override;
 
   /// \brief Distortion and Jacobians using external distortion intrinsics parameters.
   /// @param[in]  pointUndistorted  The undistorted normalised (!) image point.
@@ -137,7 +137,7 @@ struct RadialTangentialDistortion : public DistortionBase
       const Vector2f & pointUndistorted,
       const VectorXf & parameters, Vector2f * pointDistorted,
       Matrix2f * pointJacobian = nullptr,
-      Matrix2Xf * parameterJacobian = nullptr) const;
+      Matrix2Xf * parameterJacobian = nullptr) const override;
   /// @}
 
   //////////////////////////////////////////////////////////////
@@ -149,7 +149,7 @@ struct RadialTangentialDistortion : public DistortionBase
   /// @param[out] pointUndistorted The undistorted normalised (!) image point.
   /// @return     True on success (no singularity)
   inline bool undistort(const Vector2f & pointDistorted,
-                        Vector2f * pointUndistorted) const;
+                        Vector2f * pointUndistorted) const override;
 
   /// \brief Undistortion only
   /// @param[in]  pointDistorted   The distorted normalised (!) image point.
@@ -158,7 +158,7 @@ struct RadialTangentialDistortion : public DistortionBase
   /// @return     True on success (no singularity)
   inline bool undistort(const Vector2f & pointDistorted,
                         Vector2f * pointUndistorted,
-                        Matrix2f * pointJacobian) const;
+                        Matrix2f * pointJacobian) const override;
   /// @}
 
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW

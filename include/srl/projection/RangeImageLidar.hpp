@@ -75,15 +75,15 @@ struct RangeImageLidar : public ProjectionBase
 
   /// \brief Get the intrinsics as a concatenated vector.
   /// \param[out] intrinsics The intrinsics as a concatenated vector.
-  inline void getIntrinsics(VectorXf & intrinsics) const;
+  inline void getIntrinsics(VectorXf & intrinsics) const override;
 
   /// \brief overwrite all intrinsics - use with caution !
   /// \param[in] intrinsics The intrinsics as a concatenated vector.
-  inline bool setIntrinsics(const VectorXf & intrinsics);
+  inline bool setIntrinsics(const VectorXf & intrinsics) override;
 
   /// \brief Get the total number of intrinsics.
   /// \return Number of intrinsics parameters.
-  int numIntrinsicsParameters() const
+  int numIntrinsicsParameters() const override
   {
     return -1;
   }
@@ -99,7 +99,7 @@ struct RangeImageLidar : public ProjectionBase
   /// @return     Get information about the success of the projection. See
   ///             \ref ProjectionStatus for more information.
   inline ProjectionStatus project(
-      const Vector3f & point, Vector2f * imagePoint) const;
+      const Vector3f & point, Vector2f * imagePoint) const override;
 
   /// \brief Projects a Euclidean point to a 2d image point (projection).
   ///        Uses projection including distortion models.
@@ -112,7 +112,7 @@ struct RangeImageLidar : public ProjectionBase
   inline ProjectionStatus project(
       const Vector3f & point, Vector2f * imagePoint,
       Matrixf<2, 3> * pointJacobian,
-      Matrix2Xf * intrinsicsJacobian = nullptr) const;
+      Matrix2Xf * intrinsicsJacobian = nullptr) const override;
 
   inline ProjectionStatus projectSphere(
       const Vector3f & center, float radius, Vector2f * imageCenter, float& imageRadius) const;
@@ -129,7 +129,7 @@ struct RangeImageLidar : public ProjectionBase
   inline ProjectionStatus projectWithExternalParameters(
       const Vector3f & point, const VectorXf & parameters,
       Vector2f * imagePoint, Matrixf<2, 3> * pointJacobian,
-      Matrix2Xf * intrinsicsJacobian = nullptr) const;
+      Matrix2Xf * intrinsicsJacobian = nullptr) const override;
 
   /// \brief Projects Euclidean points to 2d image points (projection) in a batch.
   ///        Uses projection including distortion models.
@@ -139,7 +139,7 @@ struct RangeImageLidar : public ProjectionBase
   ///                         \ref ProjectionStatus for more information.
   inline void projectBatch(
       const Matrix3Xf & points, Matrix2Xf * imagePoints,
-      std::vector<ProjectionStatus> * stati) const;
+      std::vector<ProjectionStatus> * stati) const override;
 
   /// \brief Projects a point in homogenous coordinates to a 2d image point (projection).
   ///        Uses projection including distortion models.
@@ -148,7 +148,7 @@ struct RangeImageLidar : public ProjectionBase
   /// @return     Get information about the success of the projection. See
   ///             \ref ProjectionStatus for more information.
   inline ProjectionStatus projectHomogeneous(
-      const Vector4f & point, Vector2f * imagePoint) const;
+      const Vector4f & point, Vector2f * imagePoint) const override;
 
   /// \brief Projects a point in homogenous coordinates to a 2d image point (projection).
   ///        Uses projection including distortion models.
@@ -161,7 +161,7 @@ struct RangeImageLidar : public ProjectionBase
   inline ProjectionStatus projectHomogeneous(
       const Vector4f & point, Vector2f * imagePoint,
       Matrixf<2, 4> * pointJacobian,
-      Matrix2Xf * intrinsicsJacobian = nullptr) const;
+      Matrix2Xf * intrinsicsJacobian = nullptr) const override;
 
   /// \brief Projects a point in homogenous coordinates to a 2d image point (projection).
   ///        Uses projection including distortion models.
@@ -176,7 +176,7 @@ struct RangeImageLidar : public ProjectionBase
       const Vector4f & point, const VectorXf & parameters,
       Vector2f * imagePoint,
       Matrixf<2, 4> * pointJacobian = nullptr,
-      Matrix2Xf * intrinsicsJacobian = nullptr) const;
+      Matrix2Xf * intrinsicsJacobian = nullptr) const override;
 
   /// \brief Projects points in homogenous coordinates to 2d image points (projection) in a batch.
   ///        Uses projection including distortion models.
@@ -186,7 +186,7 @@ struct RangeImageLidar : public ProjectionBase
   ///                         \ref ProjectionStatus for more information.
   inline void projectHomogeneousBatch(
       const Matrix4Xf & points, Matrix2Xf * imagePoints,
-      std::vector<ProjectionStatus> * stati) const;
+      std::vector<ProjectionStatus> * stati) const override;
   /// @}
 
   //////////////////////////////////////////////////////////////
@@ -198,7 +198,7 @@ struct RangeImageLidar : public ProjectionBase
   /// @param[out] direction  The Euclidean direction vector.
   /// @return     true on success.
   inline bool backProject(const Vector2f & imagePoint,
-                          Vector3f * direction) const;
+                          Vector3f * direction) const override;
 
   /// \brief Back-project a 2d image point into Euclidean space (direction vector).
   /// @param[in]  imagePoint         The image point.
@@ -207,7 +207,7 @@ struct RangeImageLidar : public ProjectionBase
   /// @return     true on success.
   inline bool backProject(const Vector2f & imagePoint,
                           Vector3f * direction,
-                          Matrixf<3, 2> * pointJacobian) const;
+                          Matrixf<3, 2> * pointJacobian) const override;
 
   /// \brief Back-project 2d image points into Euclidean space (direction vectors).
   /// @param[in]  imagePoints The image points (one point per column).
@@ -215,14 +215,14 @@ struct RangeImageLidar : public ProjectionBase
   /// @param[out] success     Success of each of the back-projection
   inline bool backProjectBatch(const Matrix2Xf & imagePoints,
                                Matrix3Xf * directions,
-                               std::vector<bool> * success) const;
+                               std::vector<bool> * success) const override;
 
   /// \brief Back-project a 2d image point into homogeneous point (direction vector).
   /// @param[in]  imagePoint The image point.
   /// @param[out] direction  The homogeneous point as direction vector.
   /// @return     true on success.
   inline bool backProjectHomogeneous(const Vector2f & imagePoint,
-                                     Vector4f * direction) const;
+                                     Vector4f * direction) const override;
 
   /// \brief Back-project a 2d image point into homogeneous point (direction vector).
   /// @param[in]  imagePoint         The image point.
@@ -231,7 +231,7 @@ struct RangeImageLidar : public ProjectionBase
   /// @return     true on success.
   inline bool backProjectHomogeneous(
       const Vector2f & imagePoint, Vector4f * direction,
-      Matrixf<4, 2> * pointJacobian) const;
+      Matrixf<4, 2> * pointJacobian) const override;
 
   /// \brief Back-project 2d image points into homogeneous points (direction vectors).
   /// @param[in]  imagePoints The image points (one point per column).
@@ -239,7 +239,7 @@ struct RangeImageLidar : public ProjectionBase
   /// @param[out] success     Success of each of the back-projection
   inline bool backProjectHomogeneousBatch(const Matrix2Xf & imagePoints,
                                           Matrix4Xf * directions,
-                                          std::vector<bool> * success) const;
+                                          std::vector<bool> * success) const override;
   /// @}
 
   /// \brief get a test instance
