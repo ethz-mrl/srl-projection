@@ -74,18 +74,14 @@ enum class ProjectionStatus
 struct ProjectionBase
 {
   /// \brief default Constructor -- does nothing serious
-  ProjectionBase()
-      : imageWidth_(0),
-        imageHeight_(0)
-  {
-  }
+  ProjectionBase() = default;
 
   /// \brief Constructor for width, height and Id
   ProjectionBase(int imageWidth, int imageHeight)
         : imageWidth_(imageWidth),
           imageHeight_(imageHeight)
-    {
-    }
+  {
+  }
 
   /// \brief Destructor -- does nothing
   virtual ~ProjectionBase() = default;
@@ -319,8 +315,8 @@ struct ProjectionBase
 
   cv::Mat mask_;  ///< The mask -- empty by default
 
-  int imageWidth_;  ///< image width in pixels
-  int imageHeight_;  ///< image height in pixels
+  int imageWidth_ = 0;  ///< image width in pixels
+  int imageHeight_ = 0;  ///< image height in pixels
 };
 
 }  // namespace projection
