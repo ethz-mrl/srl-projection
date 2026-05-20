@@ -379,7 +379,6 @@ class PinholeCamera : public PinholeCameraBase
   float_t cv_;  ///< imageCenterV
   float_t one_over_fu_;  ///< 1.0 / fu_
   float_t one_over_fv_;  ///< 1.0 / fv_
-  float_t fu_over_fv_;  ///< fu_ / fv_
 
   cv::Mat map_x_fast_; ///< OpenCV undistort fast map x-coordinates
   cv::Mat map_y_fast_; ///< OpenCV undistort fast map x-coordinates

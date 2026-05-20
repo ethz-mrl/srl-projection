@@ -67,7 +67,6 @@ PinholeCamera<DISTORTION_T>::PinholeCamera(int imageWidth,
   intrinsics_[3] = cv_;  //< imageCenterV
   one_over_fu_ = 1.0 / fu_;  //< 1.0 / fu_
   one_over_fv_ = 1.0 / fv_;  //< 1.0 / fv_
-  fu_over_fv_ = fu_ / fv_;  //< fu_ / fv_
 }
 
 // overwrite all intrinsics - use with caution !
@@ -87,7 +86,6 @@ bool PinholeCamera<DISTORTION_T>::setIntrinsics(
       intrinsics.tail<distortion_t::NumDistortionIntrinsics>());
   one_over_fu_ = 1.0 / fu_;  //< 1.0 / fu_
   one_over_fv_ = 1.0 / fv_;  //< 1.0 / fv_
-  fu_over_fv_ = fu_ / fv_;  //< fu_ / fv_
   return true;
 }
 
