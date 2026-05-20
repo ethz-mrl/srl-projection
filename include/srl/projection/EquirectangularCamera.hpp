@@ -99,14 +99,6 @@ struct EquirectangularCamera : public ProjectionBase
       Matrixf<2, 3>* pointJacobian,
       Matrix2Xf* intrinsicsJacobian = nullptr) const override;
 
-  /// \brief Project a batch of 3D points to 2D image coordinates.
-  /// \param[in]  points      The 3D points in Euclidean coordinates, one per column.
-  /// \param[out] imagePoints The 2D image coordinates, one point per column.
-  /// \param[out] stati       The projection status for each point.
-  inline void projectBatch(const Matrix3Xf& points,
-                           Matrix2Xf* imagePoints,
-                           std::vector<ProjectionStatus>* stati) const override;
-
   /// \brief Project a 3D point in homogeneous coordinates to 2D image coordinates.
   /// \param[in]  point      The 3D point in homogeneous Euclidean coordinates.
   /// \param[out] imagePoint The 2D image coordinates.

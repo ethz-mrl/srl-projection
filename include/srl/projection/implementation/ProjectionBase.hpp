@@ -81,6 +81,25 @@ const cv::Mat & ProjectionBase::mask() const
   return mask_;
 }
 
+void ProjectionBase::projectBatch(
+    const Matrix3Xf& points,
+    Matrix2Xf* imagePoints,
+    std::vector<ProjectionStatus>* stati) const
+{
+  assert(imagePoints);
+  for (int i = 0; i < points.cols(); i++) {
+    Vector2f imagePoint;
+    const ProjectionStatus status = project(points.col(i), &imagePoint);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+    imagePoints->col(i) = imagePoint;
+#pragma GCC diagnostic pop
+    if (stati) {
+      stati->push_back(status);
+    }
+  }
+}
+
 // Check if the keypoint is in the image.
 bool ProjectionBase::isInImage(const Vector2f& imagePoint) const
 {

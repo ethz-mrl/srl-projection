@@ -100,16 +100,6 @@ struct Lidar : public ProjectionBase
         Vector2f * imagePoint, Matrixf<2, 3> * pointJacobian,
         Matrix2Xf * intrinsicsJacobian = nullptr) const override;
 
-    /// \brief Projects Euclidean points to 2d image points (projection) in a batch.
-    ///        Uses projection including distortion models.
-    /// @param[in]  points      The points in Euclidean coordinates (one point per column).
-    /// @param[out] imagePoints The image points (one point per column).
-    /// @param[out] stati       Get information about the success of the projections. See
-    ///                         \ref ProjectionStatus for more information.
-    inline void projectBatch(
-        const Matrix3Xf & points, Matrix2Xf * imagePoints,
-        std::vector<ProjectionStatus> * stati) const override;
-
     /// \brief Projects a point in homogenous coordinates to a 2d image point (projection).
     ///        Uses projection including distortion models.
     /// @param[in]  point      The point in Homogeneous coordinates.

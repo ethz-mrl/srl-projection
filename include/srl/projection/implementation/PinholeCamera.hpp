@@ -427,26 +427,6 @@ ProjectionStatus PinholeCamera<DISTORTION_T>::projectWithExternalParameters(
   }
 }
 
-// Projects Euclidean points to 2d image points (projection) in a batch.
-template<class DISTORTION_T>
-void PinholeCamera<DISTORTION_T>::projectBatch(
-    const Matrix3Xf & points, Matrix2Xf * imagePoints,
-    std::vector<ProjectionStatus> * stati) const
-{
-  const int numPoints = points.cols();
-  for (int i = 0; i < numPoints; ++i) {
-    Vector3f point = points.col(i);
-    Vector2f imagePoint;
-    ProjectionStatus status = project(point, &imagePoint);
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-    imagePoints->col(i) = imagePoint;
-#pragma GCC diagnostic pop
-    if(stati)
-      stati->push_back(status);
-  }
-}
-
 // Projects a point in homogenous coordinates to a 2d image point (projection).
 template<class DISTORTION_T>
 ProjectionStatus PinholeCamera<DISTORTION_T>::projectHomogeneous(

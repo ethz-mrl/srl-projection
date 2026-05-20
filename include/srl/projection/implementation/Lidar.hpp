@@ -274,22 +274,6 @@ ProjectionStatus Lidar::projectWithExternalParameters(
     return ProjectionStatus::Invalid;
 }
 
-// Projects Euclidean points to 2d image points (projection) in a batch.
-void Lidar::projectBatch(
-    const Matrix3Xf & points, Matrix2Xf * imagePoints,
-    std::vector<ProjectionStatus> * stati) const
-{
-    const int numPoints = points.cols();
-    for (int i = 0; i < numPoints; ++i) {
-        Vector3f point = points.col(i);
-        Vector2f imagePoint;
-        ProjectionStatus status = project(point, &imagePoint);
-        imagePoints->col(i) = imagePoint;
-        if(stati)
-            stati->push_back(status);
-    }
-}
-
 // Projects a point in homogenous coordinates to a 2d image point (projection).
 ProjectionStatus Lidar::projectHomogeneous(
     const Vector4f & point, Vector2f * imagePoint) const
