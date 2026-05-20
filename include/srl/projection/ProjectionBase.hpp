@@ -291,13 +291,6 @@ struct ProjectionBase
   /// @return    A random Euclidean point.
   virtual inline Vector3f createRandomVisiblePoint(float_t minDist = 0.0,
                                                    float_t maxDist = 10.0) const;
-
-  /// \brief Creates a random visible point in homogeneous coordinates.
-  /// @param[in] minDist The minimal distance of this point.
-  /// @param[in] maxDist The maximum distance of this point.
-  /// @return    A random homogeneous point.
-  virtual inline Vector4f createRandomVisibleHomogeneousPoint(float_t minDist = 0.0,
-                                                              float_t maxDist = 10.0) const;
   /// @}
 
   /// \brief Obtain the number of intrinsics parameters.

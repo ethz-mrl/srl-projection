@@ -196,14 +196,6 @@ srl::Vector3f ProjectionBase::createRandomVisiblePoint(srl::float_t minDist,
   return ray;
 }
 
-// Creates a random visible point in homogeneous coordinates.
-srl::Vector4f ProjectionBase::createRandomVisibleHomogeneousPoint(
-    srl::float_t minDist, srl::float_t maxDist) const
-{
-  srl::Vector3f point = createRandomVisiblePoint(minDist, maxDist);
-  return srl::Vector4f(point[0], point[1], point[2], 1.0);
-}
-
 } // namespace projection
 } // namespace srl
 
