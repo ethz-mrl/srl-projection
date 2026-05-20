@@ -239,22 +239,6 @@ bool EquirectangularCamera::backProject(const Vector2f& imagePoint,
   return true;
 }
 
-bool EquirectangularCamera::backProjectBatch(const Matrix2Xf& imagePoints,
-                                       Matrix3Xf* directions,
-                                       std::vector<bool>* success) const
-{
-  assert(directions);
-  for (int i = 0; i < imagePoints.cols(); ++i) {
-    Vector3f point;
-    const bool suc = backProject(imagePoints.col(i), &point);
-    directions->col(i) = point;
-    if (success) {
-      success->push_back(suc);
-    }
-  }
-  return true;
-}
-
 bool EquirectangularCamera::backProjectHomogeneous(const Vector2f& imagePoint, Vector4f* direction) const
 {
   assert(direction);

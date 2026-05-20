@@ -158,14 +158,6 @@ struct Lidar : public ProjectionBase
                             Vector3f * direction,
                             Matrixf<3, 2> * pointJacobian) const override;
 
-    /// \brief Back-project 2d image points into Euclidean space (direction vectors).
-    /// @param[in]  imagePoints The image points (one point per column).
-    /// @param[out] directions  The Euclidean direction vectors (one point per column).
-    /// @param[out] success     Success of each of the back-projection
-    inline bool backProjectBatch(const Matrix2Xf & imagePoints,
-                                 Matrix3Xf * directions,
-                                 std::vector<bool> * success) const override;
-
     /// \brief Back-project a 2d image point into homogeneous point (direction vector).
     /// @param[in]  imagePoint The image point.
     /// @param[out] direction  The homogeneous point as direction vector.

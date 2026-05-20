@@ -119,6 +119,23 @@ void ProjectionBase::projectHomogeneousBatch(
   }
 }
 
+bool ProjectionBase::backProjectBatch(
+    const Matrix2Xf& imagePoints,
+    Matrix3Xf* directions,
+    std::vector<bool>* success) const
+{
+  assert(directions);
+  for (int i = 0; i < imagePoints.cols(); i++) {
+    Vector3f point;
+    const bool s = backProject(imagePoints.col(i), &point);
+    directions->col(i) = point;
+    if (success) {
+      success->push_back(s);
+    }
+  }
+  return true;
+}
+
 // Check if the keypoint is in the image.
 bool ProjectionBase::isInImage(const Vector2f& imagePoint) const
 {

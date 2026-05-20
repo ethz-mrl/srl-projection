@@ -370,24 +370,6 @@ bool Lidar::backProject(
     return true;
 }
 
-// Back-project 2d image points into Euclidean space (direction vectors).
-bool Lidar::backProjectBatch(
-    const Matrix2Xf & imagePoints, Matrix3Xf * directions,
-    std::vector<bool> * success) const
-{
-    const int numPoints = imagePoints.cols();
-    directions->row(3) = VectorXf::Ones(numPoints);
-    for (int i = 0; i < numPoints; ++i) {
-        Vector2f imagePoint = imagePoints.col(i);
-        Vector3f point;
-        bool suc = backProject(imagePoint, &point);
-        if(success)
-            success->push_back(suc);
-        directions->col(i) = point;
-    }
-    return true;
-}
-
 // Back-project a 2d image point into homogeneous point (direction vector).
 bool Lidar::backProjectHomogeneous(
     const Vector2f & imagePoint, Vector4f * direction) const

@@ -552,24 +552,6 @@ bool PinholeCamera<DISTORTION_T>::backProject(
   return success;
 }
 
-// Back-project 2d image points into Euclidean space (direction vectors).
-template<class DISTORTION_T>
-bool PinholeCamera<DISTORTION_T>::backProjectBatch(
-    const Matrix2Xf & imagePoints, Matrix3Xf * directions,
-    std::vector<bool> * success) const
-{
-  const int numPoints = imagePoints.cols();
-  for (int i = 0; i < numPoints; ++i) {
-    Vector2f imagePoint = imagePoints.col(i);
-    Vector3f point;
-    bool suc = backProject(imagePoint, &point);
-    if(success)
-      success->push_back(suc);
-    directions->col(i) = point;
-  }
-  return true;
-}
-
 // Back-project a 2d image point into homogeneous point (direction vector).
 template<class DISTORTION_T>
 bool PinholeCamera<DISTORTION_T>::backProjectHomogeneous(
