@@ -61,10 +61,6 @@ PinholeCamera<DISTORTION_T>::PinholeCamera(int imageWidth,
     cu_(imageCenterU),
     cv_(imageCenterV)
 {
-  intrinsics_[0] = fu_;  //< focalLengthU
-  intrinsics_[1] = fv_;  //< focalLengthV
-  intrinsics_[2] = cu_;  //< imageCenterU
-  intrinsics_[3] = cv_;  //< imageCenterV
   one_over_fu_ = 1.0 / fu_;  //< 1.0 / fu_
   one_over_fv_ = 1.0 / fv_;  //< 1.0 / fv_
 }
@@ -77,7 +73,6 @@ bool PinholeCamera<DISTORTION_T>::setIntrinsics(
   if (intrinsics.cols() != NumIntrinsics) {
     return false;
   }
-  intrinsics_ = intrinsics;
   fu_ = intrinsics[0];  //< focalLengthU
   fv_ = intrinsics[1];  //< focalLengthV
   cu_ = intrinsics[2];  //< imageCenterU
@@ -193,15 +188,19 @@ bool PinholeCamera<DISTORTION_T>::undistortImage(const cv::Mat & srcImg,
 }
 
 template<class DISTORTION_T>
-void PinholeCamera<DISTORTION_T>::getIntrinsics(VectorXf & intrinsics) const
-  {
-    intrinsics = intrinsics_;
+void PinholeCamera<DISTORTION_T>::getIntrinsics(VectorXf& intrinsics) const
+{
+  intrinsics.resize(NumIntrinsics);
+  intrinsics[0] = fu_;
+  intrinsics[1] = fv_;
+  intrinsics[2] = cu_;
+  intrinsics[3] = cv_;
+  if (distortion_t::NumDistortionIntrinsics > 0) {
     VectorXf distortionIntrinsics;
-    if(distortion_t::NumDistortionIntrinsics > 0) {
-      distortion_.getParameters(distortionIntrinsics);
-      intrinsics.tail<distortion_t::NumDistortionIntrinsics>() = distortionIntrinsics;
-    }
+    distortion_.getParameters(distortionIntrinsics);
+    intrinsics.tail<distortion_t::NumDistortionIntrinsics>() = distortionIntrinsics;
   }
+}
 
 //////////////////////////////////////////
 // Methods to project points

@@ -372,7 +372,6 @@ class PinholeCamera : public PinholeCameraBase
 
   distortion_t distortion_;  ///< the distortion to be used
 
-  Matrixf<NumIntrinsics, 1> intrinsics_;  ///< summary of all intrinsics parameters
   float_t fu_;  ///< focalLengthU
   float_t fv_;  ///< focalLengthV
   float_t cu_;  ///< imageCenterU
