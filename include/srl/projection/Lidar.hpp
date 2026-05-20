@@ -40,9 +40,7 @@ struct Lidar : public ProjectionBase
     inline Lidar(const int imageWidth, const int imageHeight);
 
     /// \brief Destructor.
-    virtual ~Lidar()
-    {
-    }
+    virtual ~Lidar() = default;
 
     /// \brief Get the intrinsics as a concatenated vector.
     /// \param[out] intrinsics The intrinsics as a concatenated vector.

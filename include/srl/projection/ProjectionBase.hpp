@@ -88,9 +88,7 @@ struct ProjectionBase
     }
 
   /// \brief Destructor -- does nothing
-  virtual ~ProjectionBase()
-  {
-  }
+  virtual ~ProjectionBase() = default;
 
   //////////////////////////////////////////////////////////////
   /// \name Methods related to masking a certain image area as invalid.

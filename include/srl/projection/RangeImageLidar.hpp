@@ -71,9 +71,7 @@ struct RangeImageLidar : public ProjectionBase
               const VectorXf & beamElevationAngles);
 
   /// \brief Destructor.
-  virtual ~RangeImageLidar()
-  {
-  }
+  virtual ~RangeImageLidar() = default;
 
   /// \brief Get the intrinsics as a concatenated vector.
   /// \param[out] intrinsics The intrinsics as a concatenated vector.

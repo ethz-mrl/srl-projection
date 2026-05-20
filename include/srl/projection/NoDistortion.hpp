@@ -55,9 +55,7 @@ namespace projection {
 struct NoDistortion : public DistortionBase
 {
   /// \brief Destructor, not doing anything
-  ~NoDistortion()
-  {
-  }
+  ~NoDistortion() = default;
 
   //////////////////////////////////////////////////////////////
   /// \name Methods related to generic parameters

@@ -73,9 +73,7 @@ struct PinholeCameraBase : public ProjectionBase {
   }
 
   /// \brief Destructor.
-  virtual ~PinholeCameraBase()
-  {
-  }
+  virtual ~PinholeCameraBase() = default;
 
   /// \brief Initialise undistort maps to defaults, i.e.
   /// undistortedFocalLengh = 0.5 * (focalLengthU() + focalLengthV()) (same for U and V),
@@ -147,9 +145,7 @@ class PinholeCamera : public PinholeCameraBase
                 const distortion_t & distortion);
 
   /// \brief Destructor.
-  virtual ~PinholeCamera()
-  {
-  }
+  virtual ~PinholeCamera() = default;
 
   static const int NumProjectionIntrinsics = 4;  ///< optimisable projection intrinsics
   static const int NumIntrinsics = NumProjectionIntrinsics

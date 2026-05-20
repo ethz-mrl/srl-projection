@@ -53,9 +53,7 @@ namespace projection {
 struct DistortionBase
 {
   /// \brief Destructor -- not doing anything
-  virtual ~DistortionBase()
-  {
-  }
+  virtual ~DistortionBase() = default;
 
   //////////////////////////////////////////////////////////////
   /// \name Methods related to generic parameters
