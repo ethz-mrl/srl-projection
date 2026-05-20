@@ -47,15 +47,7 @@ namespace projection {
 // Set the mask. It must be the same size as the image and
 bool ProjectionBase::setMask(const cv::Mat & mask)
 {
-  // check type
-  if (mask.type() != CV_8UC1) {
-    return false;
-  }
-  // check size
-  if (mask.rows != imageHeight_) {
-    return false;
-  }
-  if (mask.cols != imageWidth_) {
+  if (mask.type() != CV_8UC1 || mask.rows != imageHeight_ || mask.cols != imageWidth_) {
     return false;
   }
   mask_ = mask;
