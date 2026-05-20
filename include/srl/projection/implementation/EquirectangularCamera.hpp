@@ -264,22 +264,6 @@ bool EquirectangularCamera::backProjectHomogeneous(const Vector2f& imagePoint,
   return success;
 }
 
-bool EquirectangularCamera::backProjectHomogeneousBatch(const Matrix2Xf& imagePoints,
-                                                  Matrix4Xf* directions,
-                                                  std::vector<bool>* success) const
-{
-  assert(directions);
-  for (int i = 0; i < imagePoints.cols(); ++i) {
-    Vector3f point;
-    const bool suc = backProject(imagePoints.col(i), &point);
-    directions->col(i) = point.homogeneous();
-    if (success) {
-      success->push_back(suc);
-    }
-  }
-  return true;
-}
-
 std::shared_ptr<ProjectionBase> EquirectangularCamera::createTestInstance()
 {
   return std::shared_ptr<ProjectionBase>(new EquirectangularCamera(1024, 512, 2 * M_PI, M_PI));

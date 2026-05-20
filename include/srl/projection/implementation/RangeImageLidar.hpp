@@ -455,24 +455,6 @@ bool RangeImageLidar::backProjectHomogeneous(
   return success;
 }
 
-// Back-project 2d image points into homogeneous points (direction vectors).
-bool RangeImageLidar::backProjectHomogeneousBatch(
-    const Matrix2Xf & imagePoints, Matrix4Xf * directions,
-    std::vector<bool> * success) const
-{
-  const int numPoints = imagePoints.cols();
-  directions->row(3) = VectorXf::Ones(numPoints);
-  for (int i = 0; i < numPoints; ++i) {
-    Vector2f imagePoint = imagePoints.col(i);
-    Vector3f point;
-    bool suc = backProject(imagePoint, &point);
-    if(success)
-      success->push_back(suc);
-    directions->template block<3, 1>(0, i) = point;
-  }
-  return true;
-}
-
 VectorXf RangeImageLidar::beamAzimuthAngles() const
 {
   return beamAzimuthAngles_;

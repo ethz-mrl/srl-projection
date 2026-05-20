@@ -204,14 +204,6 @@ struct RangeImageLidar : public ProjectionBase
   inline bool backProjectHomogeneous(
       const Vector2f & imagePoint, Vector4f * direction,
       Matrixf<4, 2> * pointJacobian) const override;
-
-  /// \brief Back-project 2d image points into homogeneous points (direction vectors).
-  /// @param[in]  imagePoints The image points (one point per column).
-  /// @param[out] directions  The homogeneous points as direction vectors (one point per column).
-  /// @param[out] success     Success of each of the back-projection
-  inline bool backProjectHomogeneousBatch(const Matrix2Xf & imagePoints,
-                                          Matrix4Xf * directions,
-                                          std::vector<bool> * success) const override;
   /// @}
 
   /// \brief get a test instance

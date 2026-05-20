@@ -276,9 +276,9 @@ struct ProjectionBase
   /// @param[in]  imagePoints The image points (one point per column).
   /// @param[out] directions  The homogeneous points as direction vectors (one point per column).
   /// @param[out] success     Success of each of the back-projection
-  virtual bool backProjectHomogeneousBatch(
-      const Matrix2Xf & imagePoints, Matrix4Xf * directions,
-      std::vector<bool> * success) const = 0;
+  virtual inline bool backProjectHomogeneousBatch(const Matrix2Xf& imagePoints,
+                                                  Matrix4Xf* directions,
+                                                  std::vector<bool>* success) const;
   /// @}
 
   //////////////////////////////////////////////////////////////

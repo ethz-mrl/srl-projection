@@ -164,15 +164,6 @@ struct EquirectangularCamera : public ProjectionBase
   inline bool backProjectHomogeneous(const Vector2f& imagePoint,
                                      Vector4f* direction,
                                      Matrixf<4, 2>* pointJacobian) const override;
-
-  /// \brief Back-project a batch of 2D image coordinates into 3D direction vectors in homogeneous coordinates.
-  /// \param[in]  imagePoints The 2D image coordinates, one per column.
-  /// \param[out] directions  The 3D direction vectors in homogeneous Euclidean coordinates, one per column.
-  /// \param[out] success     Whether each back-projection succeeded.
-  /// \return                 Always true.
-  inline bool backProjectHomogeneousBatch(const Matrix2Xf& imagePoints,
-                                          Matrix4Xf* directions,
-                                          std::vector<bool>* success) const override;
   /// @}
 
   /// \brief Return a test instance.
