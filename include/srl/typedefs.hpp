@@ -40,7 +40,7 @@
 
 #include <limits>
 
-#include <Eigen/Dense>
+#include <Eigen/Geometry>
 
 // Default to double precision
 #ifndef SRL_FLOAT_T
@@ -76,6 +76,9 @@ namespace srl {
   typedef Eigen::Matrix<float_t, 4, 1>              Vector4f;
   typedef Eigen::Matrix<float_t, Eigen::Dynamic, 1> VectorXf;
 
+  typedef Eigen::AngleAxis<float_t> AngleAxisf;
+  typedef Eigen::Transform<float_t, 3, Eigen::TransformTraits::Isometry> Isometry3f;
+  typedef Eigen::Translation<float_t, 3> Translation3f;
 } // namespace srl
 
 #endif
